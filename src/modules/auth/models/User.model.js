@@ -36,6 +36,35 @@ class User {
       connection.release(); // Libera la conexión de vuelta al pool
     }
   }
+
+  async viewUsers() {
+    const connection = await getConnection();
+
+    try {
+      // Ejecuta la consulta de selección
+      const [result] = await connection.query(`
+        SELECT 
+        id,
+        nombre_completo as fullName,
+        tipo_documento as documentType,
+        documento as documentNumber,
+        rol as role,
+        estado as status 
+        FROM usuarios
+      `);
+
+      return result; // Devuelve el resultado de la consulta
+    } catch (error) {
+      console.log(error);
+      throw {
+        ok: false,
+        statusCode: 500,
+        data: 'Ocurrió un error al obtener los usuarios'
+      };
+    } finally {
+      connection.release(); // Libera la conexión de vuelta al pool
+    }
+  }
 }
 
 module.exports = User;

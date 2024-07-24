@@ -1,7 +1,7 @@
 const Router = require('express');
 
 // API middlewares
-const { createUserAPI} = require('../api/auth.api');
+const { createUserAPI, viewUsersAPI} = require('../api/auth.api');
 
 // Inicializar router
 const router = Router();
@@ -10,6 +10,7 @@ const router = Router();
 router.post('/auth/createUser', createUserAPI);
 
 // Rutas get
+router.get('/auth/viewUsers', viewUsersAPI);
 
 // Rutas put
 

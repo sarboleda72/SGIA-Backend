@@ -31,6 +31,27 @@ async function createUser(options) {
   };
 }
 
+async function viewUsers() {
+  const user = new User();
+  let userResult;
+  
+  try {
+    userResult = await user.viewUsers();
+  } catch (error) {
+    if (error.statusCode) throw error;
+    console.log(error);
+    throw {
+      ok: false,
+      statusCode: 500,
+      data: 'Ocurrió un error al obtener los usuarios'
+    };
+  }
+
+  console.log(userResult);
+  return  userResult;
+}
+
 module.exports = {
   createUser,
+  viewUsers,
 };
