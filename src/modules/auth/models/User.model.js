@@ -1,5 +1,6 @@
 const getConnection = require('../../../interface/DBconn.js');
 
+// User model
 class User {
   constructor(fullName, documentType, documentNumber, password, fileId, role, status) {
     this.fullName = fullName;
