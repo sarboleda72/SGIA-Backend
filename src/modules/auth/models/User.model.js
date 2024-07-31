@@ -65,6 +65,57 @@ class User {
       connection.release(); // Libera la conexión de vuelta al pool
     }
   }
+
+  async updateUser(userId) {
+    const connection = await getConnection();
+
+    try {
+      // Ejecuta la consulta de actualización
+      await connection.query(`
+        UPDATE usuarios
+        SET nombre_completo = ?,
+        tipo_documento = ?,
+        documento = ?,
+        rol = ?,
+        estado = ?
+        WHERE id = ?
+      `, [this.fullName, this.documentType, this.documentNumber, this.role, this.status, userId]);
+
+      return { id: userId }; // Devuelve el ID del usuario actualizado
+    } catch (error) {
+      console.log(error);
+      throw {
+        ok: false,
+        statusCode: 500,
+        data: 'Ocurrió un error al actualizar el usuario'
+      };
+    } finally {
+      connection.release(); // Libera la conexión de vuelta al pool
+    }
+  }
+
+  async deleteUser(userId) {
+    const connection = await getConnection();
+
+    try {
+      // Ejecuta la consulta de eliminación
+      await connection.query(`
+        DELETE FROM usuarios
+        WHERE id = ?
+      `, [userId]);
+
+      return { id: userId }; // Devuelve el ID del usuario eliminado
+    } catch (error) {
+      console.log(error);
+      throw {
+        ok: false,
+        statusCode: 500,
+        data: 'Ocurrió un error al eliminar el usuario'
+      };
+    } finally {
+      connection.release(); // Libera la conexión de vuelta al pool
+    }
+  }
 }
 
 module.exports = User;

@@ -11,7 +11,6 @@ async function createUser(options) {
     options.status
   );
 
-  let userResult;
   try {
     userResult = await user.createUser();
   } catch (error) {
@@ -23,8 +22,6 @@ async function createUser(options) {
       data: 'Ocurrió un error al crear el usuario'
     };
   }
-
-  console.log(userResult);
 
   return {
     message: 'Usuario creado exitosamente',
@@ -47,11 +44,60 @@ async function viewUsers() {
     };
   }
 
-  console.log(userResult);
   return  userResult;
+}
+
+async function updateUser(options) {
+  const user = new User(
+    options.fullName, 
+    options.documentType, 
+    options.documentNumber, 
+    options.password, 
+    options.fileId, 
+    options.role, 
+    options.status
+  );
+
+  try {
+    userResult = await user.updateUser(options.id);
+  } catch (error) {
+    if (error.statusCode) throw error;
+    console.log(error);
+    throw {
+      ok: false,
+      statusCode: 500,
+      data: 'Ocurrió un error al actualizar el usuario'
+    };
+  }
+
+  return {
+    message: 'Usuario actualizado exitosamente',
+  };
+}
+
+async function deleteUser(options) {
+  const user = new User();
+
+  try {
+    userResult = await user.deleteUser(options.id);
+  } catch (error) {
+    if (error.statusCode) throw error;
+    console.log(error);
+    throw {
+      ok: false,
+      statusCode: 500,
+      data: 'Ocurrió un error al eliminar el usuario'
+    };
+  }
+
+  return {
+    message: 'Usuario eliminado exitosamente',
+  };
 }
 
 module.exports = {
   createUser,
   viewUsers,
+  updateUser,
+  deleteUser
 };
