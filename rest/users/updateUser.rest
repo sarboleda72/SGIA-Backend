@@ -1,0 +1,13 @@
+PUT http://localhost:4000/auth/updateUser
+content-type: application/json
+
+{ 
+    "id":"2",
+    "fullName":"Jeronimo",
+    "documentType":"CC",
+    "documentNumber":"84546343434",
+    "password":"Micontrasena",
+    "fileId":"2312301294",
+    "role":"Admnistrador",
+    "status":"Activo" 
+}
