@@ -1,15 +1,13 @@
 const getConnection = require('../../../interface/DBconn.js');
 
 // Tool model
-class Tool {
-  constructor(image, name, brand, total, available, price, status) {
-    this.image = image;
-    this.name = name;
-    this.brand = brand;
-    this.total = total;
-    this.available = available;
-    this.price = price;
+class Loan {
+  constructor(loanDate, returnDate, status, userId, toolId) {
+    this.loanDate = loanDate;
+    this.returnDate = returnDate;
     this.status = status;
+    this.userId = userId;
+    this.toolId = toolId;
   }
 
   async create() {
@@ -18,20 +16,20 @@ class Tool {
     try {
       // Ejecuta la consulta de inserción
       const [result] = await connection.query(`
-        INSERT INTO herramientas (imagen, nombre, marca, cantidad, disponible, valor, estado)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-      `, [this.image, this.name, this.brand, this.total, this.available, this.price, this.status]);
+        INSERT INTO prestamos (fecha_prestamo,	fecha_devolucion,	estado,	id_usuario,	id_herramienta)
+        VALUES (?, ?, ?, ?, ?)
+      `, [this.loanDate, this.returnDate, this.status, this.userId, this.toolId]);
 
       // Obtén el ID del último registro insertado
-      const toolId = result.insertId;
+      const laonId = result.insertId;
 
-      return { id: toolId }; // Devuelve el ID del nuevo usuario
+      return { id: laonId }; // Devuelve el ID del nuevo usuario
     } catch (error) {
       console.log(error);
       throw {
         ok: false,
         statusCode: 500,
-        data: 'Ocurrió un error al insertar las herramientas'
+        data: 'Ocurrió un error al insertar las prestamo'
       };
     } finally {
       connection.release(); // Libera la conexión de vuelta al pool
@@ -44,16 +42,20 @@ class Tool {
     try {
       // Ejecuta la consulta de selección
       const [result] = await connection.query(`
-        SELECT 
-        id,
-        imagen as image,
-        nombre as name,
-        marca as brand,
-        cantidad as total,
-        disponible as available,
-        valor as price,
-        estado as status
-        FROM herramientas
+        SELECT
+          u.nombre_completo AS fullName,
+          u.documento AS document,
+          h.nombre AS nameTool,
+          h.marca AS brandTool,
+          p.fecha_prestamo AS loanDate,
+          p.fecha_devolucion AS returnDate,
+          p.estado AS status,
+          p.id AS idLoan,
+          p.id_usuario AS idUser,
+          p.id_herramienta AS idTool
+        FROM prestamos p
+        JOIN usuarios u ON p.id_usuario = u.id
+        JOIN herramientas h ON p.id_herramienta = h.id;
       `);
 
       return result; // Devuelve el resultado de la consulta
@@ -62,7 +64,7 @@ class Tool {
       throw {
         ok: false,
         statusCode: 500,
-        data: 'Ocurrió un error al obtener las herramientas'
+        data: 'Ocurrió un error al obtener los prestamos'
       };
     } finally {
       connection.release(); // Libera la conexión de vuelta al pool
@@ -123,4 +125,4 @@ class Tool {
   }
 }
 
-module.exports = Tool;
+module.exports = Loan;

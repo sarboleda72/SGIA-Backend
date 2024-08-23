@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS sgia.almacenes (
 CREATE TABLE IF NOT EXISTS sgia.prestamos (
   id_prestamo INT NOT NULL AUTO_INCREMENT,
   fecha_prestamo DATE NOT NULL,
-  fechaFin DATE NOT NULL,
+  fecha_Fin DATE NOT NULL,
   fecha_devolucion DATE NOT NULL,
   estado TINYINT NOT NULL,
   usuarios_id_usuario INT NOT NULL,

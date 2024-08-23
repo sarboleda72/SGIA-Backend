@@ -1,46 +1,44 @@
-const Tool = require('../models/Tool.model.js');
+const Loan = require('../models/Loan.model.js');
 
-async function createTool(options) {
-  const tool = new Tool(
-    options.image,
-    options.name,
-    options.brand,
-    options.total,
-    options.available,
-    options.price,
-    options.status
+async function createLoan(options) {
+  const loan = new Loan(
+    options.loanDate, 
+    options.returnDate, 
+    options.status, 
+    options.userId, 
+    options.toolId
   );
 
   try {
-    userResult = await tool.create();
+    userResult = await loan.create();
   } catch (error) {
     if (error.statusCode) throw error;
     console.log(error);
     throw {
       ok: false,
       statusCode: 500,
-      data: 'Ocurrió un error al crear el herramienta'
+      data: 'Ocurrió un error al crear el prestamo'
     };
   }
 
   return {
-    message: 'Herramienta creado exitosamente',
+    message: 'prestamo creado exitosamente',
   };
 }
 
-async function viewTools() {
-  const tool = new Tool();
+async function viewLoans() {
+  const loan = new Loan();
   let userResult;
   
   try {
-    userResult = await tool.list();
+    userResult = await loan.list();
   } catch (error) {
     if (error.statusCode) throw error;
     console.log(error);
     throw {
       ok: false,
       statusCode: 500,
-      data: 'Ocurrió un error al obtener las herramientas'
+      data: 'Ocurrió un error al obtener los prestamos'
     };
   }
 
@@ -96,8 +94,8 @@ async function deleteTool(options) {
 }
 
 module.exports = {
-  createTool,
-  viewTools,
+  createLoan,
+  viewLoans,
   updateTool,
   deleteTool
 };

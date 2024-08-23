@@ -1,12 +1,22 @@
 POST http://localhost:4000/auth/createUser
 content-type: application/json
 
-{ 
-    "fullName":"juancho",
-    "documentType":"CC",
-    "documentNumber":"84546343434",
+# { 
+#     "fullName":"Santiago Arboleda",
+#     "documentType":"CC",
+#     "documentNumber":"84546343434",
+#     "password":"Micontrasena",
+#     "fileId":"2312301294",
+#     "role":"Admnistrador",
+#     "status":"Activo" 
+# }
+
+{
+    "fullName": "Salome",
+    "documentType":"TI",
+    "documentNumber":"123213",
     "password":"Micontrasena",
     "fileId":"2312301294",
-    "role":"Admnistrador",
-    "status":"Activo" 
+    "role":"Estudiante",
+    "status":"Activo"
 }

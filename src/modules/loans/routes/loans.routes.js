@@ -1,16 +1,16 @@
 const Router = require('express');
 
 // API middlewares
-const { createToolAPI, viewToolsAPI, updateToolAPI, deleteToolAPI} = require('../api/tools.api.js');
+const { createLoanAPI, viewLoansAPI, updateToolAPI, deleteToolAPI} = require('../api/loans.api.js');
 
 // Inicializar router
 const router = Router();
 
 // Rutas post
-router.post('/tool/createTool', createToolAPI);
+router.post('/loan/createLoan', createLoanAPI);
 
 // Rutas get
-router.get('/tool/viewTools', viewToolsAPI);
+router.get('/loan/viewLoans', viewLoansAPI);
 
 // Rutas put
 router.put('/tool/updateTool', updateToolAPI);

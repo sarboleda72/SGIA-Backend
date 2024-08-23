@@ -1,12 +1,12 @@
 const ResponseBody = require('../../../shared/model/ResponseBody.model');
-const { createTool, viewTools, updateTool, deleteTool } = require('../controller/tools.controller');
+const { createLoan, viewLoans, updateTool, deleteTool } = require('../controller/loans.controller');
 
-const createToolAPI = async (req, res) => {
-  let { image, name, brand, total, available, price, status } = req.body;
+const createLoanAPI = async (req, res) => {
+  let { loanDate, returnDate, status, userId, toolId } = req.body;
   let message;
 
   try {
-    let response = await createTool({ image, name, brand, total, available, price, status });
+    let response = await createLoan({ loanDate, returnDate, status, userId, toolId });
     message = new ResponseBody(true, 200, response);
   } catch (error) {
     if (error.statusCode) {
@@ -20,11 +20,11 @@ const createToolAPI = async (req, res) => {
   return res.json(message);
 }
 
-const viewToolsAPI = async (req, res) => {
+const viewLoansAPI = async (req, res) => {
   let message;
 
   try {
-    let response = await viewTools();
+    let response = await viewLoans();
     message = new ResponseBody(true, 200, response);
   } catch (error) {
     if (error.statusCode) {
@@ -86,8 +86,8 @@ const deleteToolAPI = async (req, res) => {
   
 
 module.exports = {
-  createToolAPI,
-  viewToolsAPI,
+  createLoanAPI,
+  viewLoansAPI,
   updateToolAPI,
   deleteToolAPI,
 };
