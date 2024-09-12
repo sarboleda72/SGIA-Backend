@@ -95,9 +95,38 @@ async function deleteUser(options) {
   };
 }
 
+async function login(options) {
+  const user = new User(
+    "", 
+    "", 
+    options.documentNumber, 
+    options.password, 
+    "", 
+    "", 
+    ""
+  );
+
+  try {
+    userResult = await user.findUser();
+  } catch (error) {
+    if (error.statusCode) throw error;
+    throw {
+      ok: false,
+      statusCode: 500,
+      data: 'Ocurrió un error al iniciar sesión'
+    };
+  }
+
+  return {
+    message: 'Sesión iniciada exitosamente',
+    user: userResult,
+  };
+}
+
 module.exports = {
   createUser,
   viewUsers,
   updateUser,
-  deleteUser
+  deleteUser,
+  login,
 };

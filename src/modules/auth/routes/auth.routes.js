@@ -1,13 +1,14 @@
 const Router = require('express');
 
 // API middlewares
-const { createUserAPI, viewUsersAPI, updateUserAPI, deleteUserAPI} = require('../api/auth.api');
+const { createUserAPI, viewUsersAPI, updateUserAPI, deleteUserAPI, loginAPI} = require('../api/auth.api');
 
 // Inicializar router
 const router = Router();
 
 // Rutas post
 router.post('/auth/createUser', createUserAPI);
+router.post('/auth/login', loginAPI);
 
 // Rutas get
 router.get('/auth/viewUsers', viewUsersAPI);

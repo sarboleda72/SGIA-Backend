@@ -77,16 +77,14 @@ class Loan {
     try {
       // Ejecuta la consulta de actualización
       await connection.query(`
-        UPDATE herramientas
-        SET imagen = ?,
-            nombre = ?,
-            marca = ?,
-            cantidad = ?,
-            disponible = ?,
-            valor = ?,
-            estado = ?
+        UPDATE loan
+        SET fecha_prestamo = ?,
+        fecha_devolucion = ?,
+        estado = ?,
+        id_usuario = ?,
+        id_herramienta = ?
         WHERE id = ?
-      `, [this.image, this.name, this.brand, this.total, this.available, this.price, this.status, toolId]);
+      `, [this.loanDate]);
 
       return { id: toolId }; // Devuelve el ID de la herramienta actualizada
     } catch (error) {
